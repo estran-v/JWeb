@@ -11,6 +11,6 @@
     <title>Biorgan</title>
   </head>
   <body>
-
+    <%@include file="signup.jsp"%>
   </body>
 </html>
