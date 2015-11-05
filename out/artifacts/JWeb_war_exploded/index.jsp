@@ -11,6 +11,11 @@
     <title>Biorgan</title>
   </head>
   <body>
+  <a href="/SigninServlet">co toi</a>
+  <a href="/SignupServlet">1scri twa</a>
+  <% if (session != null)
+        System.out.print(session.getAttribute("mail"));
+  %>
 
   </body>
 </html>

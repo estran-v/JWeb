@@ -35,6 +35,7 @@ public class SignupServlet extends HttpServlet {
             try {
                 db.RegisterUser(firstname, lastname, mail, passwd);
                 System.out.print("Registering ok");
+                this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             } catch (BiorganSqlException e) {
                 e.printStackTrace();
             }
@@ -42,6 +43,6 @@ public class SignupServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        this.getServletContext().getRequestDispatcher("/signup.jsp").forward(request, response);
     }
 }

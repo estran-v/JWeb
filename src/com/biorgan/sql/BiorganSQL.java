@@ -3,6 +3,8 @@ package com.biorgan.sql;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import com.mysql.jdbc.*;
 import com.mysql.jdbc.Driver;
 
 /**
@@ -15,6 +17,7 @@ public class BiorganSQL {
     private String passwd;
     private Connection connection = null;
     private boolean connected = false;
+    private java.sql.ResultSet res = null;
 
     public BiorganSQL(String user, String passwd)
     {
@@ -71,5 +74,27 @@ public class BiorganSQL {
             BiorganSqlException ex = new BiorganSqlException(e.getMessage());
             throw ex;
         }
+    }
+
+    public boolean getUser(String user_mail, String passwd) throws BiorganSqlException {
+
+        try {
+            OpenDB();
+            if (isConnected()) {
+                PreparedStatement ps = connection.prepareStatement("SELECT user_id, email, fname, lname FROM biorgan.users WHERE email = ? && passwd = ?");
+                ps.setString(1, user_mail);
+                ps.setString(2, passwd);
+
+                res = ps.executeQuery();
+                if (!res.next())
+                    return false;
+                return true;
+            } else
+                throw new Exception("Connection lost");
+        } catch (Exception e) {
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
+
     }
 }

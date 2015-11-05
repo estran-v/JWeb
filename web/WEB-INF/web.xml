@@ -12,4 +12,13 @@
         <servlet-name>signup</servlet-name>
         <url-pattern>/SignupServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>signin</servlet-name>
+        <servlet-class>com.biorgan.view.SigninServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>signin</servlet-name>
+        <url-pattern>/SigninServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
