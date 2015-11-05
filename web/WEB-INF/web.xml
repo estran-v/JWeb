@@ -21,4 +21,13 @@
         <servlet-name>signin</servlet-name>
         <url-pattern>/SigninServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>signout</servlet-name>
+        <servlet-class>com.biorgan.view.SignoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>signout</servlet-name>
+        <url-pattern>/SignoutServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

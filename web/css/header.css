@@ -1,0 +1,37 @@
+#top {
+    position: absolute;
+    margin: 0;
+    width: 100%;
+    top: 0;
+    background-color: whitesmoke;
+}
+
+.header {
+    background-color: darkred;
+    height: 100px;
+    margin-top: -21px;
+    font-family: Bebas;
+}
+
+#title {
+    padding: 9px 0px 0px 60px;
+}
+
+#subtitle {
+    position: absolute;
+    top: 41px;
+    left: 60px;
+    text-align: -webkit-left;
+}
+
+.right {
+    position: absolute;
+    right: 0;
+    top: 25px;
+}
+
+.button_header {
+    color: whitesmoke;
+    margin-right: 30px;
+    font-size: 30px;
+}
