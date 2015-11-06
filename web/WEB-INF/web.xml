@@ -30,4 +30,13 @@
         <servlet-name>signout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>products</servlet-name>
+        <servlet-class>com.biorgan.view.ProductsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>products</servlet-name>
+        <url-pattern>/products</url-pattern>
+    </servlet-mapping>
 </web-app>

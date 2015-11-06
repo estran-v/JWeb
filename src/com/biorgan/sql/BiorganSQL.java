@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 
 import com.mysql.jdbc.*;
 import com.mysql.jdbc.Driver;
+import com.mysql.jdbc.ResultSet;
 
 /**
  * Created by wilyr on 11/4/2015.
@@ -111,6 +112,62 @@ public class BiorganSQL {
                 if (!res.next())
                     return false;
                 return true;
+            } else
+                throw new Exception("Connection lost");
+        } catch (Exception e) {
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
+    }
+
+    public void RegisterProduct(String name, int stock, String desc,
+                             int price) throws BiorganSqlException {
+        try {
+            OpenDB();
+            if (isConnected()) {
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO biorgan.products(product_name, product_stock, product_desc, product_price) VALUES (?, ?, ?, ?)");
+                ps.setString(1, name);
+                ps.setInt(2, stock);
+                ps.setString(3, desc);
+                ps.setInt(4, price);
+                ps.execute();
+                CloseDB();
+            } else
+                throw new Exception("Connection lost");
+        } catch (Exception e) {
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
+    }
+
+    public boolean findProduct(String product_name) throws BiorganSqlException {
+
+        try {
+            OpenDB();
+            if (isConnected()) {
+                PreparedStatement ps = connection.prepareStatement("SELECT product_name FROM biorgan.products WHERE product_name = ?");
+                ps.setString(1, product_name);
+                res = ps.executeQuery();
+                if (!res.next())
+                    return false;
+                return true;
+            } else
+                throw new Exception("Connection lost");
+        } catch (Exception e) {
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
+    }
+
+    public java.sql.ResultSet getAllProducts() throws BiorganSqlException {
+
+        try {
+            OpenDB();
+            if (isConnected()) {
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM biorgan.products");
+
+                res = ps.executeQuery();
+                return res;
             } else
                 throw new Exception("Connection lost");
         } catch (Exception e) {

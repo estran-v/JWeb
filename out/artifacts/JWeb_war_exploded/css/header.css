@@ -35,3 +35,15 @@
     margin-right: 30px;
     font-size: 30px;
 }
+
+.signuperror {
+    background-color: red;
+    padding: 10px;
+}
+
+.products {
+    line-height: 1;
+    background: #8B0000 none repeat scroll 0% 0%;
+    width: 50%;
+    height: 210px;
+}
