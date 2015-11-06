@@ -28,6 +28,7 @@ public class BiorganSQL {
 
     private void OpenDB() throws BiorganSqlException {
         try {
+            System.err.println("Connection to DB...");
             String connectionURL = DB_URL;
             connection = null;
             Class.forName("com.mysql.jdbc.Driver");
@@ -36,6 +37,8 @@ public class BiorganSQL {
                 System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
             connected = true;
         } catch (Exception e) {
+            System.err.println("Connection Failed");
+            e.printStackTrace();
             BiorganSqlException ex = new BiorganSqlException(e.getMessage());
             connected = false;
             throw ex;
@@ -81,7 +84,7 @@ public class BiorganSQL {
         try {
             OpenDB();
             if (isConnected()) {
-                PreparedStatement ps = connection.prepareStatement("SELECT user_id, email, fname, lname FROM biorgan.users WHERE email = ? && passwd = ?");
+                PreparedStatement ps = connection.prepareStatement("SELECT user_id, email, fname, lname FROM biorgan.users WHERE email = ? AND passwd = ?");
                 ps.setString(1, user_mail);
                 ps.setString(2, passwd);
 
@@ -95,6 +98,24 @@ public class BiorganSQL {
             BiorganSqlException ex = new BiorganSqlException(e.getMessage());
             throw ex;
         }
+    }
 
+    public boolean findUser(String user_mail) throws BiorganSqlException {
+
+        try {
+            OpenDB();
+            if (isConnected()) {
+                PreparedStatement ps = connection.prepareStatement("SELECT email FROM biorgan.users WHERE email = ?");
+                ps.setString(1, user_mail);
+                res = ps.executeQuery();
+                if (!res.next())
+                    return false;
+                return true;
+            } else
+                throw new Exception("Connection lost");
+        } catch (Exception e) {
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
     }
 }

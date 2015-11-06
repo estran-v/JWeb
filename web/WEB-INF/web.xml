@@ -10,7 +10,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>signup</servlet-name>
-        <url-pattern>/SignupServlet</url-pattern>
+        <url-pattern>/signup</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -19,7 +19,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>signin</servlet-name>
-        <url-pattern>/SigninServlet</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -28,6 +28,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>signout</servlet-name>
-        <url-pattern>/SignoutServlet</url-pattern>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>

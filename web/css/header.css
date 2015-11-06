@@ -35,3 +35,8 @@
     margin-right: 30px;
     font-size: 30px;
 }
+
+.signuperror {
+    background-color: red;
+    padding: 10px;
+}

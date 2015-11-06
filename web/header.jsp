@@ -30,10 +30,10 @@
             <% if (session.getAttribute("mail") == null) {
                 System.out.print(session.getAttribute("mail"));
             %>
-            <a class="button_header" href="/SignupServlet">Inscription</a>
-            <a class="button_header" href="/SigninServlet">Connexion</a>
+            <a class="button_header" href="/signup">Inscription</a>
+            <a class="button_header" href="/login">Connexion</a>
             <% } else { %>
-            <a class="button_header" href="/SignoutServlet">Deconnexion</a>
+            <a class="button_header" href="/logout">Deconnexion</a>
             <%}%>
         </div>
     </div>
