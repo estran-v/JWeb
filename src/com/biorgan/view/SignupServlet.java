@@ -49,7 +49,7 @@ public class SignupServlet extends HttpServlet {
                 if (db.findUser(mail) == false) {
                     db.RegisterUser(firstname, lastname, mail, passwd);
                     System.out.println("Registering ok");
-                    this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                    this.getServletContext().getRequestDispatcher("/home").forward(request, response);
                 } else {
                     System.out.println("User already exists");
                     this.getServletContext().getRequestDispatcher("/signup.jsp?e=4").forward(request, response);

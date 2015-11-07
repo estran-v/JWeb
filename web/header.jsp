@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.biorgan.model.BiorganUser" %><%--
   Created by IntelliJ IDEA.
   User: Vincent
   Date: 04/11/2015
@@ -15,6 +15,7 @@
         <title>Biorgan</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <link rel="stylesheet" href="css/header.css" type="text/css" />
+        <link rel="stylesheet" href="css/global.css" type="text/css" />
     </head>
     <body id="top">
     <div class="header">
@@ -27,13 +28,16 @@
             <a class="button_header" href="index.jsp">Accueil</a>
             <a class="button_header" href="/products">Nos organes</a>
             <a class="button_header">Contacts</a>
-            <% if (session.getAttribute("mail") == null) {
-                System.out.print(session.getAttribute("mail"));
+            <% if (session.getAttribute("user") == null) {
             %>
-            <a class="button_header" href="/signup">Inscription</a>
-            <a class="button_header" href="/login">Connexion</a>
-            <% } else { %>
-            <a class="button_header" href="/logout">Deconnexion</a>
+                <a class="button_header" href="/signup">Inscription</a>
+                <a class="button_header" href="/login">Connexion</a>
+            <% } else {
+                System.out.println(((BiorganUser)session.getAttribute("user")).isAdmin());
+                if (((BiorganUser)session.getAttribute("user")).isAdmin()) {%>
+                    <a class="button_header" href="/admin">Admin Panel</a>
+                <% } %>
+                <a class="button_header" href="/logout">Deconnexion</a>
             <%}%>
         </div>
     </div>

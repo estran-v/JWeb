@@ -61,6 +61,7 @@ public class ProductsServlet extends HttpServlet {
                 }
                 Rows.add(row);
             }
+            db.CloseDB();
 
             request.setAttribute("resList", Rows);
         } catch (Exception e){

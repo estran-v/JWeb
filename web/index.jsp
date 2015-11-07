@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@include file="header.jsp"%>
-
-
+<jsp:include page="home"></jsp:include>
   </body>
 </html>

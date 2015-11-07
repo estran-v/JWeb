@@ -1,5 +1,6 @@
 package com.biorgan.view;
 
+import com.biorgan.model.BiorganUser;
 import com.biorgan.sql.BiorganSQL;
 import com.biorgan.sql.BiorganSqlException;
 
@@ -21,17 +22,17 @@ public class SigninServlet extends HttpServlet {
         BiorganSQL db = new BiorganSQL("root", "root");
         String passwd = request.getParameter("user_passwd");
         String mail = request.getParameter("user_mail");
-        boolean reg = false;
+        BiorganUser user = null;
 
         if (mail == null || passwd == null) {
             System.err.print("No field should be empty");
         }
         else {
             try {
-                reg = db.getUser(mail, passwd);
-                if (reg == true) {
+                user = db.getUser(mail, passwd);
+                if (user != null) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("mail", mail);
+                    session.setAttribute("user", user);
 
                     this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }

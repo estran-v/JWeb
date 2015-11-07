@@ -4,9 +4,9 @@ import java.sql.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import com.biorgan.model.BiorganUser;
 import com.mysql.jdbc.*;
 import com.mysql.jdbc.Driver;
-import com.mysql.jdbc.ResultSet;
 
 /**
  * Created by wilyr on 11/4/2015.
@@ -27,7 +27,7 @@ public class BiorganSQL {
         connected = false;
     }
 
-    private void OpenDB() throws BiorganSqlException {
+    public void OpenDB() throws BiorganSqlException {
         try {
             System.err.println("Connection to DB...");
             String connectionURL = DB_URL;
@@ -46,7 +46,7 @@ public class BiorganSQL {
         }
     }
 
-    private void CloseDB() throws BiorganSqlException {
+    public void CloseDB() throws BiorganSqlException {
         try {
             connection.close();
             connected = false;
@@ -65,7 +65,7 @@ public class BiorganSQL {
         try {
             OpenDB();
             if (isConnected()) {
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO biorgan.users(passwd, fname, lname, email) VALUES (?, ?, ?, ?)");
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO biorgan.users(passwd, fname, lname, email, isadmin) VALUES (?, ?, ?, ?, 0)");
                 ps.setString(1, user_passwd);
                 ps.setString(2, user_firstname);
                 ps.setString(3, user_lastname);
@@ -80,19 +80,24 @@ public class BiorganSQL {
         }
     }
 
-    public boolean getUser(String user_mail, String passwd) throws BiorganSqlException {
+    public BiorganUser getUser(String user_mail, String passwd) throws BiorganSqlException {
 
         try {
             OpenDB();
             if (isConnected()) {
-                PreparedStatement ps = connection.prepareStatement("SELECT user_id, email, fname, lname FROM biorgan.users WHERE email = ? AND passwd = ?");
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM biorgan.users WHERE email = ? AND passwd = ?");
                 ps.setString(1, user_mail);
                 ps.setString(2, passwd);
 
                 res = ps.executeQuery();
                 if (!res.next())
-                    return false;
-                return true;
+                    return (null);
+                res.first();
+                System.out.println(res.getString("fname"));
+                System.out.println(res.getInt("isadmin"));
+                System.out.println(res.getInt("isadmin") == 1);
+                return (new BiorganUser(res.getString("fname"), res.getString("lname"), res.getString("email"),
+                        res.getInt("isadmin") == 1));
             } else
                 throw new Exception("Connection lost");
         } catch (Exception e) {
@@ -165,7 +170,39 @@ public class BiorganSQL {
             OpenDB();
             if (isConnected()) {
                 PreparedStatement ps = connection.prepareStatement("SELECT * FROM biorgan.products");
+                res = ps.executeQuery();
+                return res;
+            } else
+                throw new Exception("Connection lost");
+        } catch (Exception e) {
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
+    }
 
+    public void PostNews(String title, String content) throws BiorganSqlException {
+        try {
+            OpenDB();
+            if (isConnected())
+            {
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO biorgan.news(titlenews, contentnews, datenews) VALUES (?, ?, NOW())");
+                ps.setString(1, title);
+                ps.setString(2, content);
+                ps.execute();
+                CloseDB();
+            } else
+                throw new Exception("Connection lost");
+        } catch (Exception e) {
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
+    }
+
+    public java.sql.ResultSet getAllNews() throws BiorganSqlException {
+        try {
+            OpenDB();
+            if (isConnected()) {
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM biorgan.news");
                 res = ps.executeQuery();
                 return res;
             } else
