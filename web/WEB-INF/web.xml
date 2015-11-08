@@ -50,6 +50,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>reviews</servlet-name>
+        <servlet-class>com.biorgan.view.ReviewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>reviews</servlet-name>
+        <url-pattern>/reviews</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>admin</servlet-name>
         <servlet-class>com.biorgan.view.AdminServlet</servlet-class>
     </servlet>

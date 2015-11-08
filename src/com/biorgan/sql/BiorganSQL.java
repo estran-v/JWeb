@@ -1,12 +1,15 @@
 package com.biorgan.sql;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import com.biorgan.model.BiorganUser;
+import com.biorgan.model.Products;
 import com.mysql.jdbc.*;
 import com.mysql.jdbc.Driver;
+import com.mysql.jdbc.ResultSet;
 
 /**
  * Created by wilyr on 11/4/2015.
@@ -126,7 +129,7 @@ public class BiorganSQL {
     }
 
     public void RegisterProduct(String name, int stock, String desc,
-                             int price) throws BiorganSqlException {
+                                int price) throws BiorganSqlException {
         try {
             OpenDB();
             if (isConnected()) {
@@ -145,17 +148,28 @@ public class BiorganSQL {
         }
     }
 
-    public boolean findProduct(String product_name) throws BiorganSqlException {
+    public Products findProduct(String product_id) throws BiorganSqlException {
+        Products p = new Products();
 
         try {
             OpenDB();
             if (isConnected()) {
-                PreparedStatement ps = connection.prepareStatement("SELECT product_name FROM biorgan.products WHERE product_name = ?");
-                ps.setString(1, product_name);
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM biorgan.products WHERE product_id = ?");
+
+                ps.setString(1, product_id);
                 res = ps.executeQuery();
+
                 if (!res.next())
-                    return false;
-                return true;
+                    return null;
+
+                p.setProduct_id(res.getString("product_id"));
+                p.setProduct_name(res.getString("product_name"));
+                p.setProduct_stock(res.getString("product_stock"));
+                p.setProduct_desc(res.getString("product_desc"));
+                p.setProduct_stock(res.getString("product_stock"));
+                p.setProduct_price(res.getString("product_price"));
+
+                return p;
             } else
                 throw new Exception("Connection lost");
         } catch (Exception e) {
@@ -208,6 +222,37 @@ public class BiorganSQL {
             } else
                 throw new Exception("Connection lost");
         } catch (Exception e) {
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
+    }
+
+    public java.sql.ResultSet findReviews(String id) throws SQLException, BiorganSqlException{
+
+        try{
+            OpenDB();
+            PreparedStatement ps = connection.prepareStatement("SELECT username, review, date_review FROM biorgan.reviews WHERE product_id = ? ORDER BY date_review DESC");
+            ps.setString(1, id);
+
+            res = ps.executeQuery();
+
+            return res;
+        } catch (Exception e){
+            BiorganSqlException ex = new BiorganSqlException(e.getMessage());
+            throw ex;
+        }
+    }
+
+    public void postReview(String product_id, String name, String review) throws BiorganSqlException{
+        try {
+            OpenDB();
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO biorgan.reviews (product_id, username, review, date_review) VALUES(?, ?, ?, NOW());");
+            ps.setString(1, product_id);
+            ps.setString(2, name);
+            ps.setString(3, review);
+
+            ps.execute();
+        } catch (Exception e){
             BiorganSqlException ex = new BiorganSqlException(e.getMessage());
             throw ex;
         }

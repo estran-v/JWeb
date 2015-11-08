@@ -24,8 +24,9 @@ public class SigninServlet extends HttpServlet {
         String mail = request.getParameter("user_mail");
         BiorganUser user = null;
 
-        if (mail == null || passwd == null) {
+        if (mail == null || passwd == null || mail.length() == 0 || passwd.length() == 0) {
             System.err.print("No field should be empty");
+            this.getServletContext().getRequestDispatcher("/signin.jsp?e=2").forward(request, response);
         }
         else {
             try {
@@ -33,12 +34,14 @@ public class SigninServlet extends HttpServlet {
                 if (user != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
+                    session.setAttribute("name", user.getFname());
 
                     this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 }
-                else
+                else {
                     System.err.print("Wrong password or email");
-
+                    this.getServletContext().getRequestDispatcher("/signin.jsp?e=1").forward(request, response);
+                }
             } catch (BiorganSqlException e) {
                 e.printStackTrace();
             }

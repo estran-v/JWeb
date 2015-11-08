@@ -17,19 +17,19 @@
     {
         switch (errorCode){
             case "1":
-                errorHtml = "<div class=\"signuperror\">No field should be empty</div>";
+                errorHtml = "<div class=\"error\">No field should be empty</div>";
                 break;
             case "2":
-                errorHtml = "<div class=\"signuperror\">Passwords don't match</div>";
+                errorHtml = "<div class=\"error\">Passwords don't match</div>";
                 break;
             case "3":
-                errorHtml = "<div class=\"signuperror\">Can't connect to database</div>";
+                errorHtml = "<div class=\"error\">Can't connect to database</div>";
                 break;
             case "4":
-                errorHtml = "<div class=\"signuperror\">User already exists</div>";
+                errorHtml = "<div class=\"error\">User already exists</div>";
                 break;
             case "5":
-                errorHtml = "<div class=\"signuperror\">Email is not valid</div>";
+                errorHtml = "<div class=\"error\">Email is not valid</div>";
                 break;
         }
     }

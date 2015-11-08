@@ -1,0 +1,39 @@
+.title {
+    display: block;
+    width: 0100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: larger;
+    background-color: #cc4934;
+}
+
+.boxcontent {
+    display: block;
+    background-color: #a1a1a1;
+    border: 2px solid #1F1F1F;
+    padding: 8px;
+    width: 100%;
+    text-align: justify;
+}
+
+.box {
+    display: block;
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.error {
+    background-color: red;
+    padding: 10px;
+}
+
+.success {
+    background-color: lawngreen;
+    padding: 10px;
+}
+
+.space {
+    margin-bottom: 10px;
+}

@@ -5,16 +5,26 @@
   Time: 14:09
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Connexion</title>
-</head>
-<body>
+
+<%@ include file="header.jsp"%>
+<%
+    if (request.getParameter("e") != null) {
+        if (request.getParameter("e").compareTo("1") == 0)
+        { %>
+<div class="error">Wrong password</div>
+<%
+}
+    if (request.getParameter("e").compareTo("2") == 0) {
+%> <div class="error">No field should be empty</div><%
+    }
+    }
+%>
+
+
     <form method="post" action="login">
         <fieldset>
             Email : <input type="text" name="user_mail" /><br>
-            Password : <input type="text" name="user_passwd" /><br>
+            Password : <input type="password" name="user_passwd" /><br>
             <input type="submit" value="Sign In" />
         </fieldset>
     </form>

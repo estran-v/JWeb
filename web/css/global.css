@@ -1,6 +1,6 @@
 .title {
     display: block;
-    width: 100%;
+    width: 0100%;
     padding: 10px;
     margin-bottom: 5px;
     text-align: center;
@@ -12,14 +12,16 @@
     display: block;
     background-color: #a1a1a1;
     border: 2px solid #1F1F1F;
-    padding: 20px;
+    padding: 8px;
+    width: 100%;
     text-align: justify;
 }
 
 .box {
     display: block;
-    width: 100%;
-    margin: 20px;
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
 }
 
 .error {
@@ -30,4 +32,8 @@
 .success {
     background-color: lawngreen;
     padding: 10px;
+}
+
+.space {
+    margin-bottom: 10px;
 }
